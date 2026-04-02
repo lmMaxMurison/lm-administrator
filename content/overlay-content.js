@@ -32,11 +32,9 @@
 
     // 🔹 Open Side Panel
     root.querySelector("#lmda-open-panel").addEventListener("click", async () => {
-        const resp = await chrome.runtime.sendMessage({
-            type: "LMDA_OPEN_PANEL"
-        });
-
-        setOutput(resp);
+        setOutput(
+            'Use the LMDA extension toolbar icon to open the side panel.'
+        );
     });
 
     // 🔹 Test API call (NO tabId — background will infer it)

@@ -1,5 +1,42 @@
 // background.js
 
+chrome.sidePanel
+  .setPanelBehavior({ openPanelOnActionClick: true })
+  .catch((error) => console.error("[LM Bridge] setPanelBehavior error", error));
+
+async function enableSidePanelForTab(tabId) {
+  if (!tabId) return;
+
+  try {
+    await chrome.sidePanel.setOptions({
+      tabId,
+      path: "sidepanel/sidepanel.html",
+      enabled: true,
+    });
+  } catch (e) {
+    console.error("[LM Bridge] enableSidePanelForTab error", e);
+  }
+}
+
+chrome.tabs.onUpdated.addListener(async (tabId, info, tab) => {
+  if (!tab.url) return;
+
+  const isLm = /^https:\/\/[^/]+\.logicmonitor\.com\//i.test(tab.url);
+
+  try {
+    if (isLm) {
+      await enableSidePanelForTab(tabId);
+    } else {
+      await chrome.sidePanel.setOptions({
+        tabId,
+        enabled: false,
+      });
+    }
+  } catch (e) {
+    console.error("[LM Bridge] tabs.onUpdated side panel error", e);
+  }
+});
+
 async function openSidePanelForTab(tabId) {
   if (!tabId) {
     return { ok: false, error: "No tabId available for opening side panel" };
