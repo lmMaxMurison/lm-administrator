@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
   "name": "LMDA Administrator",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "LogicMonitor admin tools to extend portal UI.",
   "permissions": ["tabs", "scripting", "sidePanel", "storage"],
   "host_permissions": ["https://*.logicmonitor.com/*"],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "background/background.js"
   },
   "action": {
     "default_title": "LMDA Administrator"
@@ -17,8 +17,8 @@
   "content_scripts": [
     {
       "matches": ["https://*.logicmonitor.com/*"],
-      "js": ["lm-content.js", "overlay-content.js"],
-      "css": ["overlay.css"],
+      "js": ["content/lm-content.js", "content/overlay-content.js"],
+      "css": ["ui/overlay.css"],
       "run_at": "document_idle",
       "all_frames": true
     }

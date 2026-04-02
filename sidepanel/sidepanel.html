@@ -1,35 +1,89 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>LMDA Administrator</title>
-    <link rel="stylesheet" href="sidepanel.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LMDA Administrator</title>
+  <link rel="stylesheet" href="../ui/sidepanel.css" />
 </head>
 <body>
-<div id="app">
-    <header>
-        <div class="title">LMDA Administrator</div>
-        <div class="subtitle" id="portal">Detecting portal...</div>
+  <div class="app">
+    <header class="header">
+      <div>
+        <h1>Bulk Property Editor</h1>
+        <p class="subtitle">Load devices, review properties, import CSV, and push updates.</p>
+      </div>
     </header>
 
-    <section class="card">
-        <div class="section-title">Portal Tabs</div>
-        <button id="refresh-portals">Refresh Portals</button>
-        <ul id="portal-list"></ul>
+    <section class="panel controls">
+      <div class="control-grid">
+        <label class="field">
+          <span>Portal</span>
+          <select id="portalSelect"></select>
+        </label>
+
+        <label class="field">
+          <span>Group filter</span>
+          <input
+            id="groupFilterInput"
+            type="text"
+            placeholder="Optional system.groups match"
+          />
+        </label>
+
+        <label class="field">
+          <span>Page size</span>
+          <input id="pageSizeInput" type="number" min="1" max="1000" value="200" />
+        </label>
+      </div>
+
+      <div class="button-row">
+        <button id="refreshPortalsBtn">Refresh portals</button>
+        <button id="loadDevicesBtn" class="primary">Load devices</button>
+        <button id="resetBtn">Reset edits</button>
+      </div>
     </section>
 
-    <section class="card">
-        <div class="section-title">API Test</div>
-        <button id="test-api">Test /device/devices</button>
+    <section class="panel controls">
+      <div class="button-row">
+        <label class="file-button">
+          <input id="csvInput" type="file" accept=".csv,text/csv" />
+          <span>Import CSV</span>
+        </label>
+        <button id="addColumnBtn">Add property column</button>
+        <button id="exportCsvBtn">Export CSV</button>
+        <button id="saveBtn" class="primary">Save changes</button>
+      </div>
+
+      <div class="summary-row">
+        <span id="summaryText">No data loaded.</span>
+        <span id="statusText" class="status">Ready.</span>
+      </div>
     </section>
 
-    <section class="card">
-        <div class="section-title">Output</div>
-        <pre id="output">Ready.</pre>
-    </section>
-</div>
+    <section class="panel">
+      <div class="table-toolbar">
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="Filter visible rows by any cell value"
+        />
+      </div>
 
-<script src="sidepanel.js"></script>
+      <div id="tableWrap" class="table-wrap">
+        <table id="editorTable" class="editor-table">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Output</h2>
+      <pre id="output">Ready.</pre>
+    </section>
+  </div>
+
+  <script type="module" src="../ui/sidepanel.js"></script>
 </body>
 </html>
