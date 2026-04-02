@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LMDA Administrator</title>
+    <link rel="stylesheet" href="sidepanel.css" />
+</head>
+<body>
+<div id="app">
+    <header>
+        <div class="title">LMDA Administrator</div>
+        <div class="subtitle" id="portal">Detecting portal...</div>
+    </header>
+
+    <section class="card">
+        <div class="section-title">Portal Tabs</div>
+        <button id="refresh-portals">Refresh Portals</button>
+        <ul id="portal-list"></ul>
+    </section>
+
+    <section class="card">
+        <div class="section-title">API Test</div>
+        <button id="test-api">Test /device/devices</button>
+    </section>
+
+    <section class="card">
+        <div class="section-title">Output</div>
+        <pre id="output">Ready.</pre>
+    </section>
+</div>
+
+<script src="sidepanel.js"></script>
+</body>
+</html>
