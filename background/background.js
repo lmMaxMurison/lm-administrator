@@ -1,5 +1,26 @@
 // background.js
 
+async function openSidePanelForTab(tabId) {
+  if (!tabId) {
+    return { ok: false, error: "No tabId available for opening side panel" };
+  }
+
+  try {
+    await chrome.sidePanel.setOptions({
+      tabId,
+      path: "sidepanel/sidepanel.html",
+      enabled: true,
+    });
+
+    await chrome.sidePanel.open({ tabId });
+
+    return { ok: true };
+  } catch (e) {
+    console.error("[LM Bridge] openSidePanel error", e);
+    return { ok: false, error: String(e) };
+  }
+}
+
 // Discover LM portals: tabs with LM URLs
 async function listPortals() {
   const tabs = await chrome.tabs.query({
@@ -39,6 +60,17 @@ function forwardLmRequestToTab(tabId, request) {
 
 chrome.runtime.onMessage.addListener((req, sender, sendResponse) => {
   (async () => {
+      if (req?.type === "LMDA_OPEN_PANEL") {
+      try {
+        const tabId = sender?.tab?.id;
+        const resp = await openSidePanelForTab(tabId);
+        sendResponse(resp);
+      } catch (e) {
+        console.error("[LM Bridge] LMDA_OPEN_PANEL error", e);
+        sendResponse({ ok: false, error: String(e) });
+      }
+      return;
+    }  
     if (!req || req.type !== "LM_BRIDGE") return;
 
     const { action } = req;
